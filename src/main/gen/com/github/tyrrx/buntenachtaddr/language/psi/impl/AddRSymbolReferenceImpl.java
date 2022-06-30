@@ -10,14 +10,14 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.tyrrx.buntenachtaddr.language.psi.AddRTypes.*;
 import com.github.tyrrx.buntenachtaddr.language.psi.*;
 
-public class AddRAssignmentRefImpl extends AddRAssignmentRefMixin implements AddRAssignmentRef {
+public class AddRSymbolReferenceImpl extends AddRSymbolReferenceMixin implements AddRSymbolReference {
 
-  public AddRAssignmentRefImpl(ASTNode node) {
+  public AddRSymbolReferenceImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AddRVisitor visitor) {
-    visitor.visitAssignmentRef(this);
+    visitor.visitSymbolReference(this);
   }
 
   @Override

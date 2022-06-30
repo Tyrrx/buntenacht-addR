@@ -11,20 +11,26 @@ import static com.github.tyrrx.buntenachtaddr.language.psi.AddRTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tyrrx.buntenachtaddr.language.psi.*;
 
-public class AddRAssignmentImpl extends ASTWrapperPsiElement implements AddRAssignment {
+public class AddRValueAssignmentImpl extends ASTWrapperPsiElement implements AddRValueAssignment {
 
-  public AddRAssignmentImpl(@NotNull ASTNode node) {
+  public AddRValueAssignmentImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AddRVisitor visitor) {
-    visitor.visitAssignment(this);
+    visitor.visitValueAssignment(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof AddRVisitor) accept((AddRVisitor)visitor);
     else super.accept(visitor);
+  }
+
+  @Override
+  @NotNull
+  public AddRExpression getExpression() {
+    return findNotNullChildByClass(AddRExpression.class);
   }
 
 }

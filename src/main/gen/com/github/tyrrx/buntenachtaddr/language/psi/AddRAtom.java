@@ -8,9 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface AddRAtom extends PsiElement {
 
   @Nullable
-  AddRAssignmentRef getAssignmentRef();
+  AddRLiteral getLiteral();
 
   @Nullable
-  AddRLiteral getLiteral();
+  AddRSymbolReference getSymbolReference();
 
 }

@@ -7,10 +7,10 @@ import com.intellij.psi.PsiElement;
 
 public interface AddRExpression extends PsiElement {
 
-  @Nullable
+  @NotNull
   AddRAtom getAtom();
 
-  @Nullable
-  AddRBinaryExpression getBinaryExpression();
+  @NotNull
+  List<AddRExpression> getExpressionList();
 
 }

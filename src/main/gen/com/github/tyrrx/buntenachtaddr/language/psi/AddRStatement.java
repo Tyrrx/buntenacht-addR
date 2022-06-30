@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface AddRStatement extends PsiElement {
 
   @NotNull
-  AddRAssignment getAssignment();
-
-  @NotNull
-  AddRExpression getExpression();
+  AddRValueAssignment getValueAssignment();
 
 }

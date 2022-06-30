@@ -29,14 +29,14 @@ public class AddRAtomImpl extends ASTWrapperPsiElement implements AddRAtom {
 
   @Override
   @Nullable
-  public AddRAssignmentRef getAssignmentRef() {
-    return findChildByClass(AddRAssignmentRef.class);
+  public AddRLiteral getLiteral() {
+    return findChildByClass(AddRLiteral.class);
   }
 
   @Override
   @Nullable
-  public AddRLiteral getLiteral() {
-    return findChildByClass(AddRLiteral.class);
+  public AddRSymbolReference getSymbolReference() {
+    return findChildByClass(AddRSymbolReference.class);
   }
 
 }

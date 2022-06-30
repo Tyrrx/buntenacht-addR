@@ -5,6 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AddRAssignmentRef extends PsiElement {
+public interface AddRValueAssignment extends PsiElement {
+
+  @NotNull
+  AddRExpression getExpression();
 
 }

@@ -29,14 +29,8 @@ public class AddRStatementImpl extends ASTWrapperPsiElement implements AddRState
 
   @Override
   @NotNull
-  public AddRAssignment getAssignment() {
-    return findNotNullChildByClass(AddRAssignment.class);
-  }
-
-  @Override
-  @NotNull
-  public AddRExpression getExpression() {
-    return findNotNullChildByClass(AddRExpression.class);
+  public AddRValueAssignment getValueAssignment() {
+    return findNotNullChildByClass(AddRValueAssignment.class);
   }
 
 }

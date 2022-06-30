@@ -15,10 +15,14 @@
 
 addRFile ::= (statement endOfLine)*
 endOfLine ::= NEW_LINE+ | NEW_LINE+ <<eof>> | <<eof>>
-statement ::= assignment expression
-assignment ::= VAL IDENTIFIER EQ
-expression ::= binaryExpression | atom
-binaryExpression ::= atom (PLUS expression)+
-atom ::= literal | assignmentRef
+
+statement ::= valueAssignment
+
+valueAssignment ::= VAL IDENTIFIER EQ expression
+
+expression ::= atom (PLUS expression)+ | atom
+
+atom ::= literal | symbolReference
+
 literal ::= NUMBER_LITERAL
-assignmentRef ::= IDENTIFIER {mixin="com.github.tyrrx.buntenachtaddr.language.psi.impl.AddRAssignmentRefMixin"}
+symbolReference ::= IDENTIFIER {mixin="com.github.tyrrx.buntenachtaddr.language.psi.impl.AddRSymbolReferenceMixin"}

@@ -7,19 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public class AddRVisitor extends PsiElementVisitor {
 
-  public void visitAssignment(@NotNull AddRAssignment o) {
-    visitPsiElement(o);
-  }
-
-  public void visitAssignmentRef(@NotNull AddRAssignmentRef o) {
-    visitPsiElement(o);
-  }
-
   public void visitAtom(@NotNull AddRAtom o) {
-    visitPsiElement(o);
-  }
-
-  public void visitBinaryExpression(@NotNull AddRBinaryExpression o) {
     visitPsiElement(o);
   }
 
@@ -36,6 +24,14 @@ public class AddRVisitor extends PsiElementVisitor {
   }
 
   public void visitStatement(@NotNull AddRStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitSymbolReference(@NotNull AddRSymbolReference o) {
+    visitPsiElement(o);
+  }
+
+  public void visitValueAssignment(@NotNull AddRValueAssignment o) {
     visitPsiElement(o);
   }
 

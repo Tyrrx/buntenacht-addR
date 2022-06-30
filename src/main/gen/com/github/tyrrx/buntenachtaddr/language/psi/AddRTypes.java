@@ -8,14 +8,13 @@ import com.github.tyrrx.buntenachtaddr.language.psi.impl.*;
 
 public interface AddRTypes {
 
-  IElementType ASSIGNMENT = new AddRElementType("ASSIGNMENT");
-  IElementType ASSIGNMENT_REF = new AddRElementType("ASSIGNMENT_REF");
   IElementType ATOM = new AddRElementType("ATOM");
-  IElementType BINARY_EXPRESSION = new AddRElementType("BINARY_EXPRESSION");
   IElementType END_OF_LINE = new AddRElementType("END_OF_LINE");
   IElementType EXPRESSION = new AddRElementType("EXPRESSION");
   IElementType LITERAL = new AddRElementType("LITERAL");
   IElementType STATEMENT = new AddRElementType("STATEMENT");
+  IElementType SYMBOL_REFERENCE = new AddRElementType("SYMBOL_REFERENCE");
+  IElementType VALUE_ASSIGNMENT = new AddRElementType("VALUE_ASSIGNMENT");
 
   IElementType EQ = new AddRTokenType("EQ");
   IElementType IDENTIFIER = new AddRTokenType("IDENTIFIER");
@@ -27,17 +26,8 @@ public interface AddRTypes {
   class Factory {
     public static PsiElement createElement(ASTNode node) {
       IElementType type = node.getElementType();
-      if (type == ASSIGNMENT) {
-        return new AddRAssignmentImpl(node);
-      }
-      else if (type == ASSIGNMENT_REF) {
-        return new AddRAssignmentRefImpl(node);
-      }
-      else if (type == ATOM) {
+      if (type == ATOM) {
         return new AddRAtomImpl(node);
-      }
-      else if (type == BINARY_EXPRESSION) {
-        return new AddRBinaryExpressionImpl(node);
       }
       else if (type == END_OF_LINE) {
         return new AddREndOfLineImpl(node);
@@ -50,6 +40,12 @@ public interface AddRTypes {
       }
       else if (type == STATEMENT) {
         return new AddRStatementImpl(node);
+      }
+      else if (type == SYMBOL_REFERENCE) {
+        return new AddRSymbolReferenceImpl(node);
+      }
+      else if (type == VALUE_ASSIGNMENT) {
+        return new AddRValueAssignmentImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);
     }

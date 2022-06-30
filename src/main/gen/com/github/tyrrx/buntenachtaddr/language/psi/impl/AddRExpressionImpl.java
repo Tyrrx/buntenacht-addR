@@ -28,15 +28,15 @@ public class AddRExpressionImpl extends ASTWrapperPsiElement implements AddRExpr
   }
 
   @Override
-  @Nullable
+  @NotNull
   public AddRAtom getAtom() {
-    return findChildByClass(AddRAtom.class);
+    return findNotNullChildByClass(AddRAtom.class);
   }
 
   @Override
-  @Nullable
-  public AddRBinaryExpression getBinaryExpression() {
-    return findChildByClass(AddRBinaryExpression.class);
+  @NotNull
+  public List<AddRExpression> getExpressionList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AddRExpression.class);
   }
 
 }

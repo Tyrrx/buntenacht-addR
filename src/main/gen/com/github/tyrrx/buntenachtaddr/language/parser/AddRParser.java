@@ -59,78 +59,15 @@ public class AddRParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // VAL IDENTIFIER EQ
-  public static boolean assignment(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "assignment")) return false;
-    if (!nextTokenIs(builder_, VAL)) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeTokens(builder_, 0, VAL, IDENTIFIER, EQ);
-    exit_section_(builder_, marker_, ASSIGNMENT, result_);
-    return result_;
-  }
-
-  /* ********************************************************** */
-  // IDENTIFIER
-  public static boolean assignmentRef(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "assignmentRef")) return false;
-    if (!nextTokenIs(builder_, IDENTIFIER)) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, IDENTIFIER);
-    exit_section_(builder_, marker_, ASSIGNMENT_REF, result_);
-    return result_;
-  }
-
-  /* ********************************************************** */
-  // literal | assignmentRef
+  // literal | symbolReference
   public static boolean atom(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "atom")) return false;
     if (!nextTokenIs(builder_, "<atom>", IDENTIFIER, NUMBER_LITERAL)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, ATOM, "<atom>");
     result_ = literal(builder_, level_ + 1);
-    if (!result_) result_ = assignmentRef(builder_, level_ + 1);
+    if (!result_) result_ = symbolReference(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
-    return result_;
-  }
-
-  /* ********************************************************** */
-  // atom (PLUS expression)+
-  public static boolean binaryExpression(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "binaryExpression")) return false;
-    if (!nextTokenIs(builder_, "<binary expression>", IDENTIFIER, NUMBER_LITERAL)) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_, level_, _NONE_, BINARY_EXPRESSION, "<binary expression>");
-    result_ = atom(builder_, level_ + 1);
-    result_ = result_ && binaryExpression_1(builder_, level_ + 1);
-    exit_section_(builder_, level_, marker_, result_, false, null);
-    return result_;
-  }
-
-  // (PLUS expression)+
-  private static boolean binaryExpression_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "binaryExpression_1")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = binaryExpression_1_0(builder_, level_ + 1);
-    while (result_) {
-      int pos_ = current_position_(builder_);
-      if (!binaryExpression_1_0(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "binaryExpression_1", pos_)) break;
-    }
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
-  }
-
-  // PLUS expression
-  private static boolean binaryExpression_1_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "binaryExpression_1_0")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, PLUS);
-    result_ = result_ && expression(builder_, level_ + 1);
-    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -189,15 +126,52 @@ public class AddRParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // binaryExpression | atom
+  // atom (PLUS expression)+ | atom
   public static boolean expression(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "expression")) return false;
     if (!nextTokenIs(builder_, "<expression>", IDENTIFIER, NUMBER_LITERAL)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, EXPRESSION, "<expression>");
-    result_ = binaryExpression(builder_, level_ + 1);
+    result_ = expression_0(builder_, level_ + 1);
     if (!result_) result_ = atom(builder_, level_ + 1);
     exit_section_(builder_, level_, marker_, result_, false, null);
+    return result_;
+  }
+
+  // atom (PLUS expression)+
+  private static boolean expression_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "expression_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = atom(builder_, level_ + 1);
+    result_ = result_ && expression_0_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // (PLUS expression)+
+  private static boolean expression_0_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "expression_0_1")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = expression_0_1_0(builder_, level_ + 1);
+    while (result_) {
+      int pos_ = current_position_(builder_);
+      if (!expression_0_1_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "expression_0_1", pos_)) break;
+    }
+    exit_section_(builder_, marker_, null, result_);
+    return result_;
+  }
+
+  // PLUS expression
+  private static boolean expression_0_1_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "expression_0_1_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, PLUS);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -214,15 +188,39 @@ public class AddRParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // assignment expression
+  // valueAssignment
   public static boolean statement(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "statement")) return false;
     if (!nextTokenIs(builder_, VAL)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = assignment(builder_, level_ + 1);
-    result_ = result_ && expression(builder_, level_ + 1);
+    result_ = valueAssignment(builder_, level_ + 1);
     exit_section_(builder_, marker_, STATEMENT, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // IDENTIFIER
+  public static boolean symbolReference(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "symbolReference")) return false;
+    if (!nextTokenIs(builder_, IDENTIFIER)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, IDENTIFIER);
+    exit_section_(builder_, marker_, SYMBOL_REFERENCE, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // VAL IDENTIFIER EQ expression
+  public static boolean valueAssignment(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "valueAssignment")) return false;
+    if (!nextTokenIs(builder_, VAL)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeTokens(builder_, 0, VAL, IDENTIFIER, EQ);
+    result_ = result_ && expression(builder_, level_ + 1);
+    exit_section_(builder_, marker_, VALUE_ASSIGNMENT, result_);
     return result_;
   }
 
