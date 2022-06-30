@@ -20,7 +20,7 @@ object AddRFileType: LanguageFileType(AddRLanguage) {
     }
 
     override fun getIcon(): Icon? {
-        return null//IconLoader.findIcon("/assets/icon.png")
+        return IconLoader.findIcon("/icon/addr.png")
     }
 
 }
