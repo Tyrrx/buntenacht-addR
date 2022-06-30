@@ -8,19 +8,30 @@ import static com.github.tyrrx.buntenachtaddr.language.psi.AddRTypes.*;
 %%
 
 %class AddRLexer
+%public
 %implements FlexLexer
 %unicode
 %function advance
 %type IElementType
-//%eof{  return;
+//%eof{ return EOF;
 //%eof}
 
-SourceCharacter = .
+Space = (" "|\t)
+WhiteSpace = {Space}+
+Identifier = [a-z][a-zA-Z]*
+NumberLiteral = [0-9]+
+Newline = (\n|\r|\r\n)
 
 %%
 
 <YYINITIAL> {
-    {SourceCharacter} {
-          return KEY;
-      }
+    "val" { return VAL; }
+    "+" { return PLUS; }
+    "=" { return EQ; }
+    {NumberLiteral} { return NUMBER_LITERAL; }
+    {Identifier} { return IDENTIFIER;}
+    {Newline} { return NEW_LINE; }
+    {WhiteSpace} { return TokenType.WHITE_SPACE; }
 }
+
+. { return TokenType.BAD_CHARACTER; }

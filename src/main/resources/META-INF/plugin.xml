@@ -9,6 +9,13 @@
     <extensions defaultExtensionNs="com.intellij">
         <applicationService serviceImplementation="com.github.tyrrx.buntenachtaddr.services.MyApplicationService"/>
         <projectService serviceImplementation="com.github.tyrrx.buntenachtaddr.services.MyProjectService"/>
+        <fileType name="addR" language="addR" extensions="addr"
+                  implementationClass="com.github.tyrrx.buntenachtaddr.language.AddRFileType"/>
+        <lang.parserDefinition language="addR"
+                               implementationClass="com.github.tyrrx.buntenachtaddr.language.AddRParserDefinition"/>
+
+        <lang.syntaxHighlighter language="addR"
+                                implementationClass="com.github.tyrrx.buntenachtaddr.highlighting.AddRSyntaxHighlighter"/>
     </extensions>
 
     <applicationListeners>

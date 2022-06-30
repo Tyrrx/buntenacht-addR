@@ -13,8 +13,12 @@
   tokenTypeClass="com.github.tyrrx.buntenachtaddr.language.psi.AddRTokenType"
 }
 
-simpleFile ::= item_*
-
-private item_ ::= (property|COMMENT|CRLF)
-
-property ::= (KEY? SEPARATOR VALUE?) | KEY
+addRFile ::= (statement endOfLine)*
+endOfLine ::= NEW_LINE+ | NEW_LINE+ <<eof>> | <<eof>>
+statement ::= assignment expression
+assignment ::= VAL IDENTIFIER EQ
+expression ::= binaryExpression | atom
+binaryExpression ::= atom (PLUS expression)+
+atom ::= literal | assignmentRef
+literal ::= NUMBER_LITERAL
+assignmentRef ::= IDENTIFIER

@@ -7,6 +7,6 @@ import org.jetbrains.annotations.NonNls
 class AddRTokenType(debugName: @NonNls String) : IElementType(debugName, AddRLanguage) {
 
     override fun toString(): String {
-        return "AddRTokenType" + super.toString()
+        return "AddRTokenType " + super.toString()
     }
 }

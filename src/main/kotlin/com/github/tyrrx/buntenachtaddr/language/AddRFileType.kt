@@ -1,10 +1,12 @@
 package com.github.tyrrx.buntenachtaddr.language
 
 import com.intellij.openapi.fileTypes.FileType
+import com.intellij.openapi.fileTypes.LanguageFileType
 import com.intellij.openapi.util.IconLoader
+import com.intellij.util.PlatformIcons
 import javax.swing.Icon
 
-object AddRFileType: FileType {
+object AddRFileType: LanguageFileType(AddRLanguage) {
     override fun getName(): String {
         return "addR"
     }
@@ -18,10 +20,7 @@ object AddRFileType: FileType {
     }
 
     override fun getIcon(): Icon? {
-        return IconLoader.findIcon("/assets/vb6icon16x16.png", Thread.currentThread().contextClassLoader)
+        return null//IconLoader.findIcon("/assets/icon.png")
     }
 
-    override fun isBinary(): Boolean {
-        return false
-    }
 }
