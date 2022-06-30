@@ -21,4 +21,4 @@ expression ::= binaryExpression | atom
 binaryExpression ::= atom (PLUS expression)+
 atom ::= literal | assignmentRef
 literal ::= NUMBER_LITERAL
-assignmentRef ::= IDENTIFIER
+assignmentRef ::= IDENTIFIER {mixin="com.github.tyrrx.buntenachtaddr.language.psi.impl.AddRAssignmentRefMixin"}

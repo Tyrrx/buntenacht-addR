@@ -8,12 +8,11 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.tyrrx.buntenachtaddr.language.psi.AddRTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tyrrx.buntenachtaddr.language.psi.*;
 
-public class AddRAssignmentRefImpl extends ASTWrapperPsiElement implements AddRAssignmentRef {
+public class AddRAssignmentRefImpl extends AddRAssignmentRefMixin implements AddRAssignmentRef {
 
-  public AddRAssignmentRefImpl(@NotNull ASTNode node) {
+  public AddRAssignmentRefImpl(ASTNode node) {
     super(node);
   }
 
