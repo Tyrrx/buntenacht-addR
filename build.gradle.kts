@@ -10,6 +10,8 @@ plugins {
     id("org.jetbrains.kotlin.jvm") version "1.6.10"
     // Gradle IntelliJ Plugin
     id("org.jetbrains.intellij") version "1.4.0"
+    // GrammarKit Plugin
+    id("org.jetbrains.grammarkit") version "2021.2.2"
     // Gradle Changelog Plugin
     id("org.jetbrains.changelog") version "1.3.1"
     // Gradle Qodana Plugin
@@ -23,6 +25,8 @@ version = properties("pluginVersion")
 repositories {
     mavenCentral()
 }
+
+sourceSets["main"].java.srcDirs("src/main/gen")
 
 // Configure Gradle IntelliJ Plugin - read more: https://github.com/JetBrains/gradle-intellij-plugin
 intellij {
@@ -112,5 +116,39 @@ tasks {
         // Specify pre-release label to publish the plugin in a custom Release Channel automatically. Read more:
         // https://plugins.jetbrains.com/docs/intellij/deployment.html#specifying-a-release-channel
         channels.set(listOf(properties("pluginVersion").split('-').getOrElse(1) { "default" }.split('.').first()))
+    }
+
+    generateLexer {
+        // source flex file
+        source.set("src/main/grammars/AddR.flex")
+
+        // target directory for lexer
+        targetDir.set("src/main/gen/com/github/tyrrx/buntenachtaddr/language/lexer/")
+
+        // target classname, target file will be targetDir/targetClass.java
+        targetClass.set("AddRLexer")
+
+        // optional, path to the task-specific skeleton file. Default: none
+        skeleton.set(File("src/main/grammars/lexer.skeleton"))
+
+        // if set, plugin will remove a lexer output file before generating new one. Default: false
+        purgeOldFiles.set(true)
+    }
+
+    generateParser {
+        // source bnf file
+        source.set("src/main/grammars/AddR.bnf")
+
+        // optional, task-specific root for the generated files. Default: none
+        targetRoot.set("src/main/gen/")
+
+        // path to a parser file, relative to the targetRoot
+        pathToParser.set("com/github/tyrrx/buntenachtaddr/language/parser/AddRParser.java")
+
+        // path to a directory with generated psi files, relative to the targetRoot
+        pathToPsiRoot.set("com/github/tyrrx/buntenachtaddr/language/psi")
+
+        // if set, the plugin will remove a parser output file and psi output directory before generating new ones. Default: false
+        purgeOldFiles.set(true)
     }
 }

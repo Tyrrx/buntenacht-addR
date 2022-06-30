@@ -1,0 +1,20 @@
+{
+  parserClass="com.github.tyrrx.buntenachtaddr.language.parser.AddRParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="AddR"
+  psiImplClassSuffix="Impl"
+  psiPackage="com.github.tyrrx.buntenachtaddr.language.psi"
+  psiImplPackage="com.github.tyrrx.buntenachtaddr.language.psi.impl"
+
+  elementTypeHolderClass="com.github.tyrrx.buntenachtaddr.language.psi.AddRTypes"
+  elementTypeClass="com.github.tyrrx.buntenachtaddr.language.psi.AddRElementType"
+  tokenTypeClass="com.github.tyrrx.buntenachtaddr.language.psi.AddRTokenType"
+}
+
+simpleFile ::= item_*
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY
