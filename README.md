@@ -4,6 +4,30 @@
 [![Version](https://img.shields.io/jetbrains/plugin/v/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
 [![Downloads](https://img.shields.io/jetbrains/plugin/d/PLUGIN_ID.svg)](https://plugins.jetbrains.com/plugin/PLUGIN_ID)
 
+## Baue Deine passende Entwicklungswerkzeuge selbst. Schnell und Effizient mit der IntelliJ-Plattform
+
+Wir benutzen mächtige Werkzeuge fürs Programmieren und setzen Syntax Highlighting, Code-Completion, Navigation, 
+Referenzsuche und automatisiertes Refactoring schon selbstverständlich voraus. 
+Massiver Produktivitätsgewinn. Aber da geht noch viel mehr. 
+Wir erweitern unsere Werkzeuge selber oder bauen neue. 
+Wir zeigen an einem realen Projekt, wie man eigene Produktivitätswerkzeuge 
+mit der IntelliJ-Plattform entwickelt, die es vorher noch nicht gab. 
+Inklusive Abstract Syntax Tree, Parser, Lexer, Syntaxanalyse, 
+Semantische Analyse und ganz vielen Pattern.
+
+## addR ein minimales Beispiel für ein IntelliJ Sprach-Plugin
+
+Schritte zum minimalen Setup:
+
+- Verwendung des [IntelliJ Platform Plugin Template][template]
+- Definition einer Sprache und Registrierung zugehöriger Dateitypen
+- Definition eines Lexer und Parsers
+- Generierung von Lexer und Parser
+- Registrierung von Lexer und Parser
+- Implementierung eines einfachen Syntax-Highlighters
+- Definition von benannten Elementen
+- Auflösung von Referenzen für Navigation und Rename-Refactoring
+
 ## Template ToDo list
 - [x] Create a new [IntelliJ Platform Plugin Template][template] project.
 - [ ] Get familiar with the [template documentation][template].
