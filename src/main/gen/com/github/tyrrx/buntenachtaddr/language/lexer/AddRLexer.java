@@ -53,8 +53,8 @@ public class AddRLexer implements FlexLexer {
 
   /* The ZZ_CMAP_A table has 320 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
-    "\11\0\1\1\1\5\2\14\1\6\22\0\1\1\12\0\1\12\4\0\12\4\3\0\1\13\3\0\32\3\6\0\1"+
-    "\10\12\2\1\11\11\2\1\7\4\2\12\0\1\14\242\0\2\14\26\0");
+    "\11\0\1\1\1\5\2\15\1\6\22\0\1\1\12\0\1\12\4\0\12\4\1\0\1\14\1\0\1\13\3\0\32"+
+    "\3\6\0\1\10\12\2\1\11\11\2\1\7\4\2\12\0\1\15\242\0\2\15\26\0");
 
   /** 
    * Translates DFA states to action switch labels.
@@ -62,11 +62,11 @@ public class AddRLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\1\0\1\1\1\2\1\3\1\4\2\5\1\3\1\6"+
-    "\1\7\1\3\1\10";
+    "\1\0\1\1\1\2\1\3\1\4\2\2\1\3\1\5"+
+    "\1\6\1\7\1\3\1\10";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[12];
+    int [] result = new int[13];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -91,11 +91,11 @@ public class AddRLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\15\0\32\0\47\0\64\0\15\0\101\0\116"+
-    "\0\15\0\15\0\133\0\47";
+    "\0\0\0\16\0\34\0\52\0\70\0\16\0\106\0\124"+
+    "\0\16\0\16\0\16\0\142\0\52";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[12];
+    int [] result = new int[13];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -119,13 +119,13 @@ public class AddRLexer implements FlexLexer {
 
   private static final String ZZ_TRANS_PACKED_0 =
     "\1\2\1\3\1\4\1\2\1\5\1\6\1\7\1\10"+
-    "\2\4\1\11\1\12\17\0\1\3\15\0\2\4\3\0"+
-    "\3\4\7\0\1\5\15\0\1\6\11\0\2\4\3\0"+
-    "\1\4\1\13\1\4\5\0\2\4\3\0\2\4\1\14"+
-    "\3\0";
+    "\2\4\1\11\1\12\1\13\20\0\1\3\16\0\2\4"+
+    "\3\0\3\4\10\0\1\5\16\0\1\6\12\0\2\4"+
+    "\3\0\1\4\1\14\1\4\6\0\2\4\3\0\2\4"+
+    "\1\15\4\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[104];
+    int [] result = new int[112];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -163,10 +163,10 @@ public class AddRLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\1\0\1\11\3\1\1\11\2\1\2\11\2\1";
+    "\1\0\1\11\3\1\1\11\2\1\3\11\2\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[12];
+    int [] result = new int[13];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -477,7 +477,7 @@ public class AddRLexer implements FlexLexer {
             // fall through
           case 10: break;
           case 3: 
-            { return IDENTIFIER;
+            { return ID;
             } 
             // fall through
           case 11: break;
@@ -487,17 +487,17 @@ public class AddRLexer implements FlexLexer {
             // fall through
           case 12: break;
           case 5: 
-            { return NEW_LINE;
+            { return PLUS;
             } 
             // fall through
           case 13: break;
           case 6: 
-            { return PLUS;
+            { return EQ;
             } 
             // fall through
           case 14: break;
           case 7: 
-            { return EQ;
+            { return SEMICOLON;
             } 
             // fall through
           case 15: break;

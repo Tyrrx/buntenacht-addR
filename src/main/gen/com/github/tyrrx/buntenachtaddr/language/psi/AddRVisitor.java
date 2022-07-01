@@ -11,7 +11,7 @@ public class AddRVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitEndOfLine(@NotNull AddREndOfLine o) {
+  public void visitEndOfStatement(@NotNull AddREndOfStatement o) {
     visitPsiElement(o);
   }
 
@@ -19,7 +19,15 @@ public class AddRVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitIdentifier(@NotNull AddRIdentifier o) {
+    visitNamedElement(o);
+  }
+
   public void visitLiteral(@NotNull AddRLiteral o) {
+    visitPsiElement(o);
+  }
+
+  public void visitModule(@NotNull AddRModule o) {
     visitPsiElement(o);
   }
 
@@ -28,10 +36,18 @@ public class AddRVisitor extends PsiElementVisitor {
   }
 
   public void visitSymbolReference(@NotNull AddRSymbolReference o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitValueAssignment(@NotNull AddRValueAssignment o) {
+    visitNamedIdentifierOwner(o);
+  }
+
+  public void visitNamedElement(@NotNull AddRNamedElement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedIdentifierOwner(@NotNull AddRNamedIdentifierOwner o) {
     visitPsiElement(o);
   }
 

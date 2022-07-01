@@ -5,12 +5,6 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AddRValueAssignment extends AddRNamedIdentifierOwner {
-
-  @NotNull
-  AddRExpression getExpression();
-
-  @NotNull
-  AddRIdentifier getIdentifier();
+public interface AddRIdentifier extends AddRNamedElement {
 
 }

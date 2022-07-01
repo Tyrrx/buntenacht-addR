@@ -17,8 +17,8 @@ import com.intellij.psi.tree.TokenSet
 
 class AddRParserDefinition: ParserDefinition {
 
-    private val FILE = IFileElementType(AddRLanguage)
-    private val WHITE_SPACES = TokenSet.create(TokenType.WHITE_SPACE)
+    private val file = IFileElementType(AddRLanguage)
+    private val whiteSpace = TokenSet.create(TokenType.WHITE_SPACE)
 //    private val COMMENTS = TokenSet.create(SimpleTypes.COMMENT)
 
     override fun createLexer(project: Project?): Lexer {
@@ -30,7 +30,7 @@ class AddRParserDefinition: ParserDefinition {
     }
 
     override fun getFileNodeType(): IFileElementType {
-       return FILE
+       return file
     }
 
     override fun getCommentTokens(): TokenSet {
@@ -50,6 +50,6 @@ class AddRParserDefinition: ParserDefinition {
     }
 
     override fun getWhitespaceTokens(): TokenSet {
-        return WHITE_SPACES
+        return whiteSpace
     }
 }

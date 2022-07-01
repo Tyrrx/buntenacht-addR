@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface AddRValueAssignment extends AddRNamedIdentifierOwner {
+public interface AddRModule extends PsiElement {
 
   @NotNull
-  AddRExpression getExpression();
+  List<AddREndOfStatement> getEndOfStatementList();
 
   @NotNull
-  AddRIdentifier getIdentifier();
+  List<AddRStatement> getStatementList();
 
 }

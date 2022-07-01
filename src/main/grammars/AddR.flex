@@ -28,9 +28,10 @@ Newline = (\n|\r|\r\n)
     "val" { return VAL; }
     "+" { return PLUS; }
     "=" { return EQ; }
+    ";" {return SEMICOLON; }
     {NumberLiteral} { return NUMBER_LITERAL; }
-    {Identifier} { return IDENTIFIER;}
-    {Newline} { return NEW_LINE; }
+    {Identifier} { return ID;}
+    {Newline} { return TokenType.WHITE_SPACE; }
     {WhiteSpace} { return TokenType.WHITE_SPACE; }
 }
 

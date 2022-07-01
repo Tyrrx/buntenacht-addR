@@ -8,17 +8,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.tyrrx.buntenachtaddr.language.psi.AddRTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tyrrx.buntenachtaddr.language.psi.*;
 
-public class AddREndOfLineImpl extends ASTWrapperPsiElement implements AddREndOfLine {
+public class AddRIdentifierImpl extends AddRIdentifierMixin implements AddRIdentifier {
 
-  public AddREndOfLineImpl(@NotNull ASTNode node) {
+  public AddRIdentifierImpl(ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AddRVisitor visitor) {
-    visitor.visitEndOfLine(this);
+    visitor.visitIdentifier(this);
   }
 
   @Override

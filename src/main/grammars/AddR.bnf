@@ -13,16 +13,20 @@
   tokenTypeClass="com.github.tyrrx.buntenachtaddr.language.psi.AddRTokenType"
 }
 
-addRFile ::= (statement endOfLine)*
-endOfLine ::= NEW_LINE+ | NEW_LINE+ <<eof>> | <<eof>>
-
+addRFile ::= module
+module ::= (statement endOfStatement)*
+endOfStatement ::= SEMICOLON | SEMICOLON <<eof>>
 statement ::= valueAssignment
 
-valueAssignment ::= VAL IDENTIFIER EQ expression
+valueAssignment ::= VAL identifier EQ expression {mixin="AddRValueAssignmentMixin" implements="AddRNamedIdentifierOwner"}
 
 expression ::= atom (PLUS expression)+ | atom
 
 atom ::= literal | symbolReference
 
 literal ::= NUMBER_LITERAL
-symbolReference ::= IDENTIFIER {mixin="com.github.tyrrx.buntenachtaddr.language.psi.impl.AddRSymbolReferenceMixin"}
+
+symbolReference ::= identifier {mixin="AddRSymbolReferenceMixin" implements="AddRNamedElement"}
+
+identifier ::= ID {mixin="AddRIdentifierMixin" implements="AddRNamedElement"}
+//symbolReference ::= IDENTIFIER {mixin="com.github.tyrrx.buntenachtaddr.language.psi.impl.AddRSymbolReferenceMixin" implements="AddRNamedElement"}

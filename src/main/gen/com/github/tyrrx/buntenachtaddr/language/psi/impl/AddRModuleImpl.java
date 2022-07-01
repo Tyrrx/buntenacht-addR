@@ -8,16 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static com.github.tyrrx.buntenachtaddr.language.psi.AddRTypes.*;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import com.github.tyrrx.buntenachtaddr.language.psi.*;
 
-public class AddRValueAssignmentImpl extends AddRValueAssignmentMixin implements AddRValueAssignment {
+public class AddRModuleImpl extends ASTWrapperPsiElement implements AddRModule {
 
-  public AddRValueAssignmentImpl(ASTNode node) {
+  public AddRModuleImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull AddRVisitor visitor) {
-    visitor.visitValueAssignment(this);
+    visitor.visitModule(this);
   }
 
   @Override
@@ -28,14 +29,14 @@ public class AddRValueAssignmentImpl extends AddRValueAssignmentMixin implements
 
   @Override
   @NotNull
-  public AddRExpression getExpression() {
-    return findNotNullChildByClass(AddRExpression.class);
+  public List<AddREndOfStatement> getEndOfStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AddREndOfStatement.class);
   }
 
   @Override
   @NotNull
-  public AddRIdentifier getIdentifier() {
-    return findNotNullChildByClass(AddRIdentifier.class);
+  public List<AddRStatement> getStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, AddRStatement.class);
   }
 
 }

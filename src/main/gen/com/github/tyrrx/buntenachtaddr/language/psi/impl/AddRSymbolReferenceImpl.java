@@ -26,4 +26,10 @@ public class AddRSymbolReferenceImpl extends AddRSymbolReferenceMixin implements
     else super.accept(visitor);
   }
 
+  @Override
+  @NotNull
+  public AddRIdentifier getIdentifier() {
+    return findNotNullChildByClass(AddRIdentifier.class);
+  }
+
 }

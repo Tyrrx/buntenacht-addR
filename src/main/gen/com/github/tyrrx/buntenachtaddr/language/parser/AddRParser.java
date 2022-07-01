@@ -36,33 +36,16 @@ public class AddRParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // (statement endOfLine)*
+  // module
   static boolean addRFile(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "addRFile")) return false;
-    while (true) {
-      int pos_ = current_position_(builder_);
-      if (!addRFile_0(builder_, level_ + 1)) break;
-      if (!empty_element_parsed_guard_(builder_, "addRFile", pos_)) break;
-    }
-    return true;
-  }
-
-  // statement endOfLine
-  private static boolean addRFile_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "addRFile_0")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = statement(builder_, level_ + 1);
-    result_ = result_ && endOfLine(builder_, level_ + 1);
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
+    return module(builder_, level_ + 1);
   }
 
   /* ********************************************************** */
   // literal | symbolReference
   public static boolean atom(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "atom")) return false;
-    if (!nextTokenIs(builder_, "<atom>", IDENTIFIER, NUMBER_LITERAL)) return false;
+    if (!nextTokenIs(builder_, "<atom>", ID, NUMBER_LITERAL)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, ATOM, "<atom>");
     result_ = literal(builder_, level_ + 1);
@@ -72,55 +55,25 @@ public class AddRParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // NEW_LINE+ | NEW_LINE+ <<eof>> | <<eof>>
-  public static boolean endOfLine(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "endOfLine")) return false;
+  // SEMICOLON | SEMICOLON <<eof>>
+  public static boolean endOfStatement(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "endOfStatement")) return false;
+    if (!nextTokenIs(builder_, SEMICOLON)) return false;
     boolean result_;
-    Marker marker_ = enter_section_(builder_, level_, _NONE_, END_OF_LINE, "<end of line>");
-    result_ = endOfLine_0(builder_, level_ + 1);
-    if (!result_) result_ = endOfLine_1(builder_, level_ + 1);
-    if (!result_) result_ = eof(builder_, level_ + 1);
-    exit_section_(builder_, level_, marker_, result_, false, null);
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, SEMICOLON);
+    if (!result_) result_ = endOfStatement_1(builder_, level_ + 1);
+    exit_section_(builder_, marker_, END_OF_STATEMENT, result_);
     return result_;
   }
 
-  // NEW_LINE+
-  private static boolean endOfLine_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "endOfLine_0")) return false;
+  // SEMICOLON <<eof>>
+  private static boolean endOfStatement_1(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "endOfStatement_1")) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, NEW_LINE);
-    while (result_) {
-      int pos_ = current_position_(builder_);
-      if (!consumeToken(builder_, NEW_LINE)) break;
-      if (!empty_element_parsed_guard_(builder_, "endOfLine_0", pos_)) break;
-    }
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
-  }
-
-  // NEW_LINE+ <<eof>>
-  private static boolean endOfLine_1(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "endOfLine_1")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = endOfLine_1_0(builder_, level_ + 1);
+    result_ = consumeToken(builder_, SEMICOLON);
     result_ = result_ && eof(builder_, level_ + 1);
-    exit_section_(builder_, marker_, null, result_);
-    return result_;
-  }
-
-  // NEW_LINE+
-  private static boolean endOfLine_1_0(PsiBuilder builder_, int level_) {
-    if (!recursion_guard_(builder_, level_, "endOfLine_1_0")) return false;
-    boolean result_;
-    Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, NEW_LINE);
-    while (result_) {
-      int pos_ = current_position_(builder_);
-      if (!consumeToken(builder_, NEW_LINE)) break;
-      if (!empty_element_parsed_guard_(builder_, "endOfLine_1_0", pos_)) break;
-    }
     exit_section_(builder_, marker_, null, result_);
     return result_;
   }
@@ -129,7 +82,7 @@ public class AddRParser implements PsiParser, LightPsiParser {
   // atom (PLUS expression)+ | atom
   public static boolean expression(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "expression")) return false;
-    if (!nextTokenIs(builder_, "<expression>", IDENTIFIER, NUMBER_LITERAL)) return false;
+    if (!nextTokenIs(builder_, "<expression>", ID, NUMBER_LITERAL)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_, level_, _NONE_, EXPRESSION, "<expression>");
     result_ = expression_0(builder_, level_ + 1);
@@ -176,6 +129,18 @@ public class AddRParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
+  // ID
+  public static boolean identifier(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "identifier")) return false;
+    if (!nextTokenIs(builder_, ID)) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = consumeToken(builder_, ID);
+    exit_section_(builder_, marker_, IDENTIFIER, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
   // NUMBER_LITERAL
   public static boolean literal(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "literal")) return false;
@@ -184,6 +149,31 @@ public class AddRParser implements PsiParser, LightPsiParser {
     Marker marker_ = enter_section_(builder_);
     result_ = consumeToken(builder_, NUMBER_LITERAL);
     exit_section_(builder_, marker_, LITERAL, result_);
+    return result_;
+  }
+
+  /* ********************************************************** */
+  // (statement endOfStatement)*
+  public static boolean module(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "module")) return false;
+    Marker marker_ = enter_section_(builder_, level_, _NONE_, MODULE, "<module>");
+    while (true) {
+      int pos_ = current_position_(builder_);
+      if (!module_0(builder_, level_ + 1)) break;
+      if (!empty_element_parsed_guard_(builder_, "module", pos_)) break;
+    }
+    exit_section_(builder_, level_, marker_, true, false, null);
+    return true;
+  }
+
+  // statement endOfStatement
+  private static boolean module_0(PsiBuilder builder_, int level_) {
+    if (!recursion_guard_(builder_, level_, "module_0")) return false;
+    boolean result_;
+    Marker marker_ = enter_section_(builder_);
+    result_ = statement(builder_, level_ + 1);
+    result_ = result_ && endOfStatement(builder_, level_ + 1);
+    exit_section_(builder_, marker_, null, result_);
     return result_;
   }
 
@@ -200,25 +190,27 @@ public class AddRParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // IDENTIFIER
+  // identifier
   public static boolean symbolReference(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "symbolReference")) return false;
-    if (!nextTokenIs(builder_, IDENTIFIER)) return false;
+    if (!nextTokenIs(builder_, ID)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = consumeToken(builder_, IDENTIFIER);
+    result_ = identifier(builder_, level_ + 1);
     exit_section_(builder_, marker_, SYMBOL_REFERENCE, result_);
     return result_;
   }
 
   /* ********************************************************** */
-  // VAL IDENTIFIER EQ expression
+  // VAL identifier EQ expression
   public static boolean valueAssignment(PsiBuilder builder_, int level_) {
     if (!recursion_guard_(builder_, level_, "valueAssignment")) return false;
     if (!nextTokenIs(builder_, VAL)) return false;
     boolean result_;
     Marker marker_ = enter_section_(builder_);
-    result_ = consumeTokens(builder_, 0, VAL, IDENTIFIER, EQ);
+    result_ = consumeToken(builder_, VAL);
+    result_ = result_ && identifier(builder_, level_ + 1);
+    result_ = result_ && consumeToken(builder_, EQ);
     result_ = result_ && expression(builder_, level_ + 1);
     exit_section_(builder_, marker_, VALUE_ASSIGNMENT, result_);
     return result_;
